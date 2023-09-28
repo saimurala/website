@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+    }
+
+    #weatherForm {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+
+    #weather {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      white-space: pre-line; /* Preserve line breaks */
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weather Information</h1>
+  <form id="weatherForm">
+    <label for="location">Enter Location:</label>
+    <input type="text" id="location" name="location">
+    <button type="button" id="getWeatherBtn">Get Weather</button>
+  </form>
+  <p id="weather"></p>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#getWeatherBtn").click(function() {
+        const location = $("#location").val();
+
+        $.post("/getWeather", { location: location }, function(data) {
+          // Replace newline characters with <br> tags
+          const weatherWithBreaks = data.replace(/\n/g, "<br>");
+          $("#weather").html(weatherWithBreaks);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
